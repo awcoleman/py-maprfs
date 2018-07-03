@@ -10,8 +10,10 @@ import ctypes as ct
 PY3 = sys.version_info.major > 2
 
 
+# Load MapRPythonClient.a, use RTLD_LAZY (mode=1). Otherwise tries to link
+#   libjvm for functions we don't need
 try:
-    _lib = ct.cdll.LoadLibrary('/opt/mapr/support/python/MapRPythonClient.a')
+    _lib = ct.CDLL('/opt/mapr/support/python/MapRPythonClient.a',mode=1)
 except OSError:
     raise ImportError("Can not find the shared library: MapRPythonClient.a")
 
